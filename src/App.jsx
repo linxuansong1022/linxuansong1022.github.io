@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
@@ -9,7 +9,7 @@ import Experience from './components/Experience'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
 import P5Background from './components/P5Background'
-import SoundsAndColors from './components/SoundsAndColors'
+const SoundsAndColors = lazy(() => import('./components/SoundsAndColors'))
 
 library.add(fas, fab)
 
@@ -53,7 +53,9 @@ export default function App() {
     return (
         <>
             {animationActive ? (
-                <SoundsAndColors active={animationActive} />
+                <Suspense fallback={null}>
+                    <SoundsAndColors active={animationActive} />
+                </Suspense>
             ) : (
                 <P5Background theme={theme} />
             )}

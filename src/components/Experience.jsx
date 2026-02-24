@@ -28,7 +28,17 @@ export default function Experience() {
                             }}>
                                 <h3>{exp.title}</h3>
                                 <h4>{exp.org}</h4>
-                                {(activeIdx === i) && <p>{exp.desc}</p>}
+                                <div
+                                    className="timeline-desc"
+                                    style={{
+                                        maxHeight: activeIdx === i ? '200px' : '0',
+                                        opacity: activeIdx === i ? 1 : 0,
+                                        overflow: 'hidden',
+                                        transition: 'max-height 0.4s ease, opacity 0.3s ease'
+                                    }}
+                                >
+                                    <p>{exp.desc}</p>
+                                </div>
                             </div>
                         </div>
                     ))}
