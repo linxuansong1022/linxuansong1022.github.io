@@ -107,6 +107,6 @@ export const allTags = [
 
 export const socialLinks = [
     { name: "GitHub", url: "https://github.com/linxuansong1022", icon: "github" },
-    { name: "LinkedIn", url: "https://www.linkedin.com/in/linxuan-song-13a985289/", icon: "linkedin" },
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/linxuan-song-5a6614381/", icon: "linkedin" },
     { name: "Email", url: "mailto:linxuansong1022@outlook.com", icon: "envelope" }
 ];
