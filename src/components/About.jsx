@@ -10,7 +10,7 @@ export default function About({ animationActive, onToggleAnimation }) {
             <div className="about-content">
                 <div className="about-photo-wrapper">
                     <img
-                        src="/avatar.jpg"
+                        src={`${import.meta.env.BASE_URL}avatar.jpg`}
                         alt={personalInfo.name}
                         className="about-photo"
                     />
