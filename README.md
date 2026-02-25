@@ -2,7 +2,7 @@
 
 A minimalist, monospace-styled personal portfolio built with **React + Vite**.
 
-🔗 **Live:** [linxuansong1022.github.io/my-portfolio](https://linxuansong1022.github.io/my-portfolio/)
+🔗 **Live:** [linxuansong1022.github.io](https://linxuansong1022.github.io/)
 
 ## Features
 
