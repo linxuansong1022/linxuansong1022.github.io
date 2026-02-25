@@ -1,7 +1,8 @@
 {
   "name": "my-portfolio",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "description": "Linxuan Song's personal portfolio website",
   "type": "module",
   "scripts": {
     "dev": "vite",
