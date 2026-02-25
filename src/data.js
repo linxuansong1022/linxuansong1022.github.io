@@ -47,14 +47,14 @@ export const experiences = [
 export const projects = [
     {
         title: "Diffusion-Classification-Regression",
-        date: "October 2025 – Present",
+        date: "February – June 2025",
         desc: "Transfer learning framework for DDPM — image classification +4.06% over ViT, ocean wave height prediction MSE -54.4%. ⭐ 82 stars on GitHub.",
         tags: ["python", "pytorch", "diffusion"],
         links: { github: "https://github.com/linxuansong1022/Diffusion-Classification-Regression" }
     },
     {
         title: "Chinese Culinary GraphRAG",
-        date: "October 2024 – Present",
+        date: "January 2026 – Present",
         desc: "Hybrid retrieval system with Neo4j knowledge graph + Milvus vector store. ~35% retrieval recall improvement over FAISS/Chroma baseline.",
         tags: ["python", "neo4j", "langchain"],
         links: { github: "https://github.com/linxuansong1022/MyRAG" }
