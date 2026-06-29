@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React + TypeScript Reading Notes | Linxuan Song</title>
+    <style>
+      :root {
+        --bg-primary: #f0ece4;
+        --text-primary: #1a1a1a;
+        --border-color: #1a1a1a;
+        --card-bg: #1a1a1a;
+        --card-text: #f0ece4;
+        --muted: rgba(26, 26, 26, 0.68);
+        --code-bg: #1a1a1a;
+        --code-text: #f0ece4;
+        --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-mono);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.75;
+        font-size: 15px;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        box-shadow: inset 0 0 150px 40px rgba(30, 40, 80, 0.22);
+      }
+
+      .page {
+        width: min(980px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 34px 0 72px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 3rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .brand {
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .back-link {
+        color: var(--text-primary);
+        text-decoration: none;
+        border: 2px solid var(--border-color);
+        padding: 0.45rem 0.8rem;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+      }
+
+      .back-link:hover {
+        background: var(--text-primary);
+        color: var(--bg-primary);
+      }
+
+      .post-header {
+        margin-bottom: 2rem;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        border: 2px solid var(--border-color);
+        padding: 0.25rem 0.55rem;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 1.4px;
+        margin-bottom: 1.2rem;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 4.2rem);
+        line-height: 1.05;
+        letter-spacing: 4px;
+        margin: 0 0 1rem;
+      }
+
+      .dek {
+        max-width: 760px;
+        color: var(--muted);
+        font-size: 0.96rem;
+      }
+
+      article {
+        background: rgba(240, 236, 228, 0.84);
+        border: 2px solid var(--border-color);
+        padding: clamp(1.2rem, 4vw, 3rem);
+      }
+
+      article h1 {
+        display: none;
+      }
+
+      article h2 {
+        margin: 3rem 0 1rem;
+        padding-top: 1.2rem;
+        border-top: 2px solid var(--border-color);
+        font-size: 1.35rem;
+        letter-spacing: 1px;
+      }
+
+      article h3 {
+        margin: 2rem 0 0.8rem;
+        font-size: 1rem;
+      }
+
+      article p {
+        margin: 0 0 1rem;
+      }
+
+      article ul,
+      article ol {
+        margin: 0 0 1.4rem 1.4rem;
+        padding: 0;
+      }
+
+      article li {
+        margin-bottom: 0.45rem;
+      }
+
+      code {
+        background: rgba(26, 26, 26, 0.08);
+        border: 1px solid rgba(26, 26, 26, 0.2);
+        padding: 0.08rem 0.28rem;
+        font-family: var(--font-mono);
+        font-size: 0.9em;
+      }
+
+      pre {
+        overflow-x: auto;
+        background: var(--code-bg);
+        color: var(--code-text);
+        border: 2px solid var(--border-color);
+        padding: 1rem;
+        margin: 1rem 0 1.6rem;
+      }
+
+      pre code {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        color: inherit;
+        font-size: 0.82rem;
+      }
+
+      blockquote {
+        margin: 1.4rem 0;
+        padding: 1rem 1.2rem;
+        border-left: 4px solid var(--border-color);
+        background: rgba(26, 26, 26, 0.06);
+      }
+
+      .loading {
+        opacity: 0.65;
+      }
+
+      @media (max-width: 640px) {
+        .topbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        article {
+          border-left: 0;
+          border-right: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <nav class="topbar">
+        <div class="brand">L.S.: Blog</div>
+        <a class="back-link" href="/#blog">Back to portfolio</a>
+      </nav>
+
+      <header class="post-header">
+        <div class="eyebrow">Frontend Notes · 2026-06-30</div>
+        <h1>React + TypeScript Reading Notes</h1>
+        <p class="dek">
+          A beginner-friendly reading guide for React + TypeScript code: state, props,
+          effects, forms, lists, context, hooks, and JSX syntax.
+        </p>
+      </header>
+
+      <article id="post" class="loading">Loading note...</article>
+    </main>
+
+    <script>
+      const escapeHtml = (value) =>
+        value
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;')
+
+      const inlineMarkdown = (value) =>
+        escapeHtml(value)
+          .replace(/`([^`]+)`/g, '<code>$1</code>')
+          .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+
+      const renderMarkdown = (markdown) => {
+        const lines = markdown.replace(/\r\n/g, '\n').split('\n')
+        const html = []
+        let paragraph = []
+        let list = []
+        let inCode = false
+        let code = []
+
+        const flushParagraph = () => {
+          if (paragraph.length) {
+            html.push(`<p>${inlineMarkdown(paragraph.join(' '))}</p>`)
+            paragraph = []
+          }
+        }
+
+        const flushList = () => {
+          if (list.length) {
+            html.push(`<ul>${list.map(item => `<li>${inlineMarkdown(item)}</li>`).join('')}</ul>`)
+            list = []
+          }
+        }
+
+        for (const line of lines) {
+          if (line.startsWith('```')) {
+            if (inCode) {
+              html.push(`<pre><code>${escapeHtml(code.join('\n'))}</code></pre>`)
+              code = []
+              inCode = false
+            } else {
+              flushParagraph()
+              flushList()
+              inCode = true
+            }
+            continue
+          }
+
+          if (inCode) {
+            code.push(line)
+            continue
+          }
+
+          if (!line.trim()) {
+            flushParagraph()
+            flushList()
+            continue
+          }
+
+          if (line.startsWith('### ')) {
+            flushParagraph()
+            flushList()
+            html.push(`<h3>${inlineMarkdown(line.slice(4))}</h3>`)
+            continue
+          }
+
+          if (line.startsWith('## ')) {
+            flushParagraph()
+            flushList()
+            html.push(`<h2>${inlineMarkdown(line.slice(3))}</h2>`)
+            continue
+          }
+
+          if (line.startsWith('# ')) {
+            flushParagraph()
+            flushList()
+            html.push(`<h1>${inlineMarkdown(line.slice(2))}</h1>`)
+            continue
+          }
+
+          if (line.startsWith('- ')) {
+            flushParagraph()
+            list.push(line.slice(2))
+            continue
+          }
+
+          paragraph.push(line.trim())
+        }
+
+        flushParagraph()
+        flushList()
+        return html.join('\n')
+      }
+
+      fetch('./react-typescript-notes.md')
+        .then(response => {
+          if (!response.ok) throw new Error('Unable to load note')
+          return response.text()
+        })
+        .then(markdown => {
+          const post = document.getElementById('post')
+          post.classList.remove('loading')
+          post.innerHTML = renderMarkdown(markdown)
+        })
+        .catch(error => {
+          document.getElementById('post').textContent = error.message
+        })
+    </script>
+  </body>
+</html>
