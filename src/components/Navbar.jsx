@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSun, faMoon, faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 
-const sections = ['about', 'experience', 'projects', 'contact']
+const sections = ['about', 'experience', 'projects', 'blog', 'contact']
 
 export default function Navbar({ theme, toggleTheme }) {
     const [activeSection, setActiveSection] = useState('about')

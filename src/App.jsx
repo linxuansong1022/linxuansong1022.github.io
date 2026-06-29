@@ -7,6 +7,7 @@ import Navbar from './components/Navbar'
 import About from './components/About'
 import Experience from './components/Experience'
 import Projects from './components/Projects'
+import Blog from './components/Blog'
 import Contact from './components/Contact'
 import P5Background from './components/P5Background'
 const SoundsAndColors = lazy(() => import('./components/SoundsAndColors'))
@@ -67,6 +68,7 @@ export default function App() {
                 />
                 <Experience />
                 <Projects />
+                <Blog />
                 <Contact />
             </main>
             <footer className="footer">
