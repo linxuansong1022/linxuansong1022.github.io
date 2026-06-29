@@ -3,31 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React + TypeScript Reading Notes | Linxuan Song</title>
+    <title>React + TypeScript Lab | Linxuan Song</title>
     <style>
       :root {
-        --bg-primary: #f0ece4;
-        --text-primary: #1a1a1a;
-        --border-color: #1a1a1a;
-        --card-bg: #1a1a1a;
-        --card-text: #f0ece4;
-        --muted: rgba(26, 26, 26, 0.68);
-        --code-bg: #1a1a1a;
-        --code-text: #f0ece4;
-        --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
+        --bg: #f0ece4;
+        --ink: #1a1a1a;
+        --muted: rgba(26, 26, 26, 0.66);
+        --card: #1a1a1a;
+        --card-ink: #f0ece4;
+        --line: #1a1a1a;
+        --soft: rgba(26, 26, 26, 0.08);
+        --font: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       body {
         margin: 0;
-        font-family: var(--font-mono);
-        background: var(--bg-primary);
-        color: var(--text-primary);
-        line-height: 1.75;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font);
         font-size: 15px;
+        line-height: 1.7;
       }
 
       body::before {
@@ -38,8 +35,14 @@
         box-shadow: inset 0 0 150px 40px rgba(30, 40, 80, 0.22);
       }
 
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
       .page {
-        width: min(980px, calc(100% - 32px));
+        width: min(1180px, calc(100% - 32px));
         margin: 0 auto;
         padding: 34px 0 72px;
       }
@@ -49,130 +52,285 @@
         justify-content: space-between;
         align-items: center;
         gap: 1rem;
-        margin-bottom: 3rem;
         padding-bottom: 1rem;
-        border-bottom: 2px solid var(--border-color);
+        border-bottom: 2px solid var(--line);
+      }
+
+      .brand,
+      .back-link,
+      .tag,
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 1.4px;
       }
 
       .brand {
         font-weight: 700;
-        letter-spacing: 2px;
-        text-transform: uppercase;
       }
 
       .back-link {
-        color: var(--text-primary);
+        color: var(--ink);
         text-decoration: none;
-        border: 2px solid var(--border-color);
+        border: 2px solid var(--line);
         padding: 0.45rem 0.8rem;
         font-size: 0.78rem;
-        text-transform: uppercase;
-        letter-spacing: 1.2px;
       }
 
-      .back-link:hover {
-        background: var(--text-primary);
-        color: var(--bg-primary);
+      .back-link:hover,
+      .control-btn:hover {
+        background: var(--ink);
+        color: var(--bg);
       }
 
-      .post-header {
-        margin-bottom: 2rem;
+      .hero {
+        padding: 4rem 0 3rem;
       }
 
       .eyebrow {
         display: inline-block;
-        border: 2px solid var(--border-color);
+        border: 2px solid var(--line);
         padding: 0.25rem 0.55rem;
         font-size: 0.72rem;
-        text-transform: uppercase;
-        letter-spacing: 1.4px;
         margin-bottom: 1.2rem;
       }
 
       h1 {
-        font-size: clamp(2rem, 5vw, 4.2rem);
-        line-height: 1.05;
+        font-size: clamp(2.2rem, 7vw, 5rem);
+        line-height: 1.02;
         letter-spacing: 4px;
         margin: 0 0 1rem;
+        max-width: 900px;
       }
 
       .dek {
-        max-width: 760px;
+        max-width: 780px;
         color: var(--muted);
-        font-size: 0.96rem;
+        margin: 0;
       }
 
-      article {
-        background: rgba(240, 236, 228, 0.84);
-        border: 2px solid var(--border-color);
-        padding: clamp(1.2rem, 4vw, 3rem);
+      .note-strip {
+        border: 2px solid var(--line);
+        padding: 1rem;
+        margin-bottom: 2rem;
+        background: rgba(240, 236, 228, 0.72);
       }
 
-      article h1 {
-        display: none;
+      .lab {
+        display: grid;
+        gap: 1.5rem;
       }
 
-      article h2 {
-        margin: 3rem 0 1rem;
-        padding-top: 1.2rem;
-        border-top: 2px solid var(--border-color);
-        font-size: 1.35rem;
+      .lesson {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+        gap: 1rem;
+        align-items: stretch;
+      }
+
+      .code-panel,
+      .preview-panel {
+        border: 2px solid var(--line);
+        min-width: 0;
+      }
+
+      .code-panel {
+        background: var(--card);
+        color: var(--card-ink);
+        padding: 1.2rem;
+      }
+
+      .preview-panel {
+        background: rgba(240, 236, 228, 0.82);
+        padding: 1.2rem;
+      }
+
+      .lesson-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      h2 {
+        font-size: 1.05rem;
+        margin: 0;
         letter-spacing: 1px;
       }
 
-      article h3 {
-        margin: 2rem 0 0.8rem;
-        font-size: 1rem;
-      }
-
-      article p {
-        margin: 0 0 1rem;
-      }
-
-      article ul,
-      article ol {
-        margin: 0 0 1.4rem 1.4rem;
-        padding: 0;
-      }
-
-      article li {
-        margin-bottom: 0.45rem;
-      }
-
-      code {
-        background: rgba(26, 26, 26, 0.08);
-        border: 1px solid rgba(26, 26, 26, 0.2);
-        padding: 0.08rem 0.28rem;
-        font-family: var(--font-mono);
-        font-size: 0.9em;
+      .tag {
+        border: 1px solid currentColor;
+        padding: 0.15rem 0.45rem;
+        font-size: 0.62rem;
+        white-space: nowrap;
+        opacity: 0.78;
       }
 
       pre {
+        margin: 0;
         overflow-x: auto;
-        background: var(--code-bg);
-        color: var(--code-text);
-        border: 2px solid var(--border-color);
-        padding: 1rem;
-        margin: 1rem 0 1.6rem;
+        white-space: pre;
       }
 
-      pre code {
-        background: transparent;
-        border: 0;
-        padding: 0;
-        color: inherit;
+      code {
+        font-family: var(--font);
         font-size: 0.82rem;
       }
 
-      blockquote {
-        margin: 1.4rem 0;
-        padding: 1rem 1.2rem;
-        border-left: 4px solid var(--border-color);
-        background: rgba(26, 26, 26, 0.06);
+      .explain {
+        color: var(--muted);
+        font-size: 0.85rem;
+        margin: 1rem 0 0;
       }
 
-      .loading {
-        opacity: 0.65;
+      .preview-title {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 1.4px;
+        margin-bottom: 1rem;
+        color: var(--muted);
+      }
+
+      .counter-value {
+        font-size: 4rem;
+        line-height: 1;
+        font-weight: 700;
+        margin: 0.8rem 0 1rem;
+      }
+
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        align-items: center;
+      }
+
+      .control-btn,
+      .demo-button,
+      .todo-item {
+        border: 2px solid var(--line);
+        background: transparent;
+        color: var(--ink);
+        padding: 0.55rem 0.85rem;
+        cursor: pointer;
+      }
+
+      .demo-button.primary {
+        background: var(--ink);
+        color: var(--bg);
+      }
+
+      .demo-button.secondary {
+        background: transparent;
+        color: var(--ink);
+      }
+
+      .demo-button.destructive {
+        background: #7c1f1f;
+        border-color: #7c1f1f;
+        color: #fff;
+      }
+
+      .field,
+      select {
+        border: 2px solid var(--line);
+        background: rgba(255, 255, 255, 0.28);
+        color: var(--ink);
+        padding: 0.5rem 0.65rem;
+        min-width: 0;
+      }
+
+      .field {
+        width: min(100%, 260px);
+      }
+
+      .control-stack {
+        display: grid;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .status-box {
+        border: 2px solid var(--line);
+        padding: 1rem;
+        min-height: 154px;
+        background: var(--soft);
+      }
+
+      .status-success { color: #217a3b; }
+      .status-error { color: #9a2626; }
+      .status-loading { color: #4a6fa5; }
+
+      .todo-list {
+        display: grid;
+        gap: 0.5rem;
+      }
+
+      .todo-item {
+        width: 100%;
+        text-align: left;
+      }
+
+      .todo-item.done {
+        background: var(--ink);
+        color: var(--bg);
+      }
+
+      .meter {
+        height: 12px;
+        border: 2px solid var(--line);
+        margin: 1rem 0;
+      }
+
+      .meter-fill {
+        height: 100%;
+        background: var(--ink);
+        width: 0%;
+        transition: width 0.2s ease;
+      }
+
+      .context-preview {
+        border: 2px solid var(--line);
+        padding: 1rem;
+      }
+
+      .context-preview.dark {
+        background: var(--ink);
+        color: var(--bg);
+      }
+
+      .context-preview.dark .control-btn {
+        border-color: var(--bg);
+        color: var(--bg);
+      }
+
+      .context-preview.dark .control-btn:hover {
+        background: var(--bg);
+        color: var(--ink);
+      }
+
+      .context-preview.light {
+        background: var(--bg);
+        color: var(--ink);
+      }
+
+      .summary {
+        margin-top: 2rem;
+        border: 2px solid var(--line);
+        padding: 1.25rem;
+        background: var(--card);
+        color: var(--card-ink);
+      }
+
+      .summary ul {
+        margin: 0.8rem 0 0 1.2rem;
+        padding: 0;
+      }
+
+      @media (max-width: 860px) {
+        .lesson {
+          grid-template-columns: 1fr;
+        }
       }
 
       @media (max-width: 640px) {
@@ -181,9 +339,8 @@
           flex-direction: column;
         }
 
-        article {
-          border-left: 0;
-          border-right: 0;
+        .hero {
+          padding-top: 2.5rem;
         }
       }
     </style>
@@ -191,131 +348,253 @@
   <body>
     <main class="page">
       <nav class="topbar">
-        <div class="brand">L.S.: Blog</div>
+        <div class="brand">L.S.: React Lab</div>
         <a class="back-link" href="/#blog">Back to portfolio</a>
       </nav>
 
-      <header class="post-header">
-        <div class="eyebrow">Frontend Notes · 2026-06-30</div>
-        <h1>React + TypeScript Reading Notes</h1>
+      <header class="hero">
+        <div class="eyebrow">Interactive Frontend Notes · 2026-06-30</div>
+        <h1>React + TypeScript Reading Lab</h1>
         <p class="dek">
-          A beginner-friendly reading guide for React + TypeScript code: state, props,
-          effects, forms, lists, context, hooks, and JSX syntax.
+          A small playground for reading React code. Each section pairs the code shape
+          with a live preview, so you can see what state, props, conditions, lists,
+          and context actually change on the page.
         </p>
       </header>
 
-      <article id="post" class="loading">Loading note...</article>
+      <div class="note-strip">
+        Read this page from left to right: code on the left, live behavior on the right.
+        The goal is not to memorize everything, but to recognize the pattern when you see it in a real codebase.
+      </div>
+
+      <section class="lab">
+        <div class="lesson">
+          <section class="code-panel">
+            <div class="lesson-head">
+              <h2>1. useState</h2>
+              <span class="tag">state changes UI</span>
+            </div>
+            <pre><code>const [count, setCount] = useState(0)
+
+const increment = () => {
+  setCount(prev => prev + 1)
+}
+
+return (
+  &lt;button onClick={increment}&gt;
+    Count: {count}
+  &lt;/button&gt;
+)</code></pre>
+            <p class="explain">The value is <code>count</code>. The only safe way to update it is <code>setCount</code>.</p>
+          </section>
+          <section class="preview-panel">
+            <div class="preview-title">Live preview</div>
+            <div class="counter-value" id="countValue">0</div>
+            <div class="row">
+              <button class="control-btn" id="decBtn">-</button>
+              <button class="control-btn" id="resetBtn">Reset</button>
+              <button class="control-btn" id="incBtn">+</button>
+            </div>
+          </section>
+        </div>
+
+        <div class="lesson">
+          <section class="code-panel">
+            <div class="lesson-head">
+              <h2>2. Props</h2>
+              <span class="tag">pass data in</span>
+            </div>
+            <pre><code>function Button({ variant, children }) {
+  return (
+    &lt;button className={`btn ${variant}`}&gt;
+      {children}
+    &lt;/button&gt;
+  )
+}
+
+&lt;Button variant="primary"&gt;
+  Save
+&lt;/Button&gt;</code></pre>
+            <p class="explain"><code>variant</code> controls style. <code>children</code> controls what text appears inside.</p>
+          </section>
+          <section class="preview-panel">
+            <div class="preview-title">Adjust props</div>
+            <div class="control-stack">
+              <label>variant <select id="variantSelect">
+                <option value="primary">primary</option>
+                <option value="secondary">secondary</option>
+                <option value="destructive">destructive</option>
+              </select></label>
+              <label>children <input class="field" id="buttonText" value="Save changes" /></label>
+            </div>
+            <button class="demo-button primary" id="propsButton">Save changes</button>
+          </section>
+        </div>
+
+        <div class="lesson">
+          <section class="code-panel">
+            <div class="lesson-head">
+              <h2>3. Conditional Rendering</h2>
+              <span class="tag">if / else for UI</span>
+            </div>
+            <pre><code>{loading && &lt;div&gt;Loading...&lt;/div&gt;}
+
+{error && &lt;div&gt;Error: {error}&lt;/div&gt;}
+
+{user && (
+  &lt;div&gt;
+    Name: {user.name}
+  &lt;/div&gt;
+)}</code></pre>
+            <p class="explain">React shows different JSX depending on the current state.</p>
+          </section>
+          <section class="preview-panel">
+            <div class="preview-title">Pick a state</div>
+            <div class="row" style="margin-bottom: 1rem;">
+              <button class="control-btn" data-status="loading">loading</button>
+              <button class="control-btn" data-status="error">error</button>
+              <button class="control-btn" data-status="success">success</button>
+              <button class="control-btn" data-status="empty">empty</button>
+            </div>
+            <div class="status-box" id="statusBox"></div>
+          </section>
+        </div>
+
+        <div class="lesson">
+          <section class="code-panel">
+            <div class="lesson-head">
+              <h2>4. List Rendering</h2>
+              <span class="tag">array to rows</span>
+            </div>
+            <pre><code>{todos.map(todo => (
+  &lt;div
+    key={todo.id}
+    onClick={() => toggleTodo(todo.id)}
+  &gt;
+    {todo.completed ? 'Done' : 'Todo'}
+    {todo.text}
+  &lt;/div&gt;
+))}</code></pre>
+            <p class="explain"><code>map</code> turns each item into UI. <code>key</code> helps React track each row.</p>
+          </section>
+          <section class="preview-panel">
+            <div class="preview-title">Click a row</div>
+            <div id="progressText"></div>
+            <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+            <div class="todo-list" id="todoList"></div>
+          </section>
+        </div>
+
+        <div class="lesson">
+          <section class="code-panel">
+            <div class="lesson-head">
+              <h2>5. Context</h2>
+              <span class="tag">shared data</span>
+            </div>
+            <pre><code>const ThemeContext = createContext()
+
+&lt;ThemeContext.Provider value={{ theme, toggleTheme }}&gt;
+  {children}
+&lt;/ThemeContext.Provider&gt;
+
+const { theme, toggleTheme } = useTheme()</code></pre>
+            <p class="explain">Context is a shared box. Provider puts data in; <code>useContext</code> takes it out.</p>
+          </section>
+          <section class="preview-panel">
+            <div class="preview-title">Shared theme idea</div>
+            <div class="context-preview light" id="themePreview">
+              <strong>Current theme:</strong> <span id="themeName">light</span>
+              <p>This box changes because it reads the shared theme value.</p>
+              <button class="control-btn" id="themeBtn">Toggle theme</button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="summary">
+        <h2>How to read React code</h2>
+        <ul>
+          <li><strong>state</strong> is data that can change.</li>
+          <li><strong>functions</strong> are actions triggered by clicks, typing, or submit.</li>
+          <li><strong>return JSX</strong> is what appears on the page.</li>
+          <li><strong>props</strong> are inputs passed into a component.</li>
+          <li><strong>map</strong> usually means a list is being rendered.</li>
+          <li><strong>context</strong> means shared data without passing props through every layer.</li>
+        </ul>
+      </section>
     </main>
 
     <script>
-      const escapeHtml = (value) =>
-        value
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#039;')
-
-      const inlineMarkdown = (value) =>
-        escapeHtml(value)
-          .replace(/`([^`]+)`/g, '<code>$1</code>')
-          .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-
-      const renderMarkdown = (markdown) => {
-        const lines = markdown.replace(/\r\n/g, '\n').split('\n')
-        const html = []
-        let paragraph = []
-        let list = []
-        let inCode = false
-        let code = []
-
-        const flushParagraph = () => {
-          if (paragraph.length) {
-            html.push(`<p>${inlineMarkdown(paragraph.join(' '))}</p>`)
-            paragraph = []
-          }
-        }
-
-        const flushList = () => {
-          if (list.length) {
-            html.push(`<ul>${list.map(item => `<li>${inlineMarkdown(item)}</li>`).join('')}</ul>`)
-            list = []
-          }
-        }
-
-        for (const line of lines) {
-          if (line.startsWith('```')) {
-            if (inCode) {
-              html.push(`<pre><code>${escapeHtml(code.join('\n'))}</code></pre>`)
-              code = []
-              inCode = false
-            } else {
-              flushParagraph()
-              flushList()
-              inCode = true
-            }
-            continue
-          }
-
-          if (inCode) {
-            code.push(line)
-            continue
-          }
-
-          if (!line.trim()) {
-            flushParagraph()
-            flushList()
-            continue
-          }
-
-          if (line.startsWith('### ')) {
-            flushParagraph()
-            flushList()
-            html.push(`<h3>${inlineMarkdown(line.slice(4))}</h3>`)
-            continue
-          }
-
-          if (line.startsWith('## ')) {
-            flushParagraph()
-            flushList()
-            html.push(`<h2>${inlineMarkdown(line.slice(3))}</h2>`)
-            continue
-          }
-
-          if (line.startsWith('# ')) {
-            flushParagraph()
-            flushList()
-            html.push(`<h1>${inlineMarkdown(line.slice(2))}</h1>`)
-            continue
-          }
-
-          if (line.startsWith('- ')) {
-            flushParagraph()
-            list.push(line.slice(2))
-            continue
-          }
-
-          paragraph.push(line.trim())
-        }
-
-        flushParagraph()
-        flushList()
-        return html.join('\n')
+      let count = 0
+      const countValue = document.getElementById('countValue')
+      const setCount = (next) => {
+        count = next
+        countValue.textContent = count
       }
+      document.getElementById('incBtn').addEventListener('click', () => setCount(count + 1))
+      document.getElementById('decBtn').addEventListener('click', () => setCount(count - 1))
+      document.getElementById('resetBtn').addEventListener('click', () => setCount(0))
 
-      fetch('./react-typescript-notes.md')
-        .then(response => {
-          if (!response.ok) throw new Error('Unable to load note')
-          return response.text()
+      const variantSelect = document.getElementById('variantSelect')
+      const buttonText = document.getElementById('buttonText')
+      const propsButton = document.getElementById('propsButton')
+      const renderPropsButton = () => {
+        propsButton.className = `demo-button ${variantSelect.value}`
+        propsButton.textContent = buttonText.value || 'Button text'
+      }
+      variantSelect.addEventListener('change', renderPropsButton)
+      buttonText.addEventListener('input', renderPropsButton)
+
+      const statusBox = document.getElementById('statusBox')
+      const renderStatus = (status) => {
+        const views = {
+          loading: '<div class="status-loading">Loading user data...</div>',
+          error: '<div class="status-error">Error: Failed to load user data<br><button class="control-btn" style="margin-top: .8rem;">Try Again</button></div>',
+          success: '<div class="status-success">User loaded successfully!</div><p><strong>Name:</strong> Linxuan</p><p><strong>Email:</strong> linxuan@example.com</p>',
+          empty: '<div>Please log in</div>'
+        }
+        statusBox.innerHTML = views[status]
+      }
+      document.querySelectorAll('[data-status]').forEach(button => {
+        button.addEventListener('click', () => renderStatus(button.dataset.status))
+      })
+      renderStatus('success')
+
+      const todos = [
+        { id: 1, text: 'Learn useState', completed: true },
+        { id: 2, text: 'Read props', completed: true },
+        { id: 3, text: 'Understand conditional rendering', completed: false },
+        { id: 4, text: 'Practice map and key', completed: false }
+      ]
+      const todoList = document.getElementById('todoList')
+      const progressText = document.getElementById('progressText')
+      const meterFill = document.getElementById('meterFill')
+      const renderTodos = () => {
+        const completed = todos.filter(todo => todo.completed).length
+        progressText.textContent = `Progress: ${completed}/${todos.length} completed`
+        meterFill.style.width = `${(completed / todos.length) * 100}%`
+        todoList.innerHTML = ''
+        todos.forEach(todo => {
+          const row = document.createElement('button')
+          row.className = `todo-item ${todo.completed ? 'done' : ''}`
+          row.textContent = `${todo.completed ? 'Done' : 'Todo'} · ${todo.text}`
+          row.addEventListener('click', () => {
+            todo.completed = !todo.completed
+            renderTodos()
+          })
+          todoList.appendChild(row)
         })
-        .then(markdown => {
-          const post = document.getElementById('post')
-          post.classList.remove('loading')
-          post.innerHTML = renderMarkdown(markdown)
-        })
-        .catch(error => {
-          document.getElementById('post').textContent = error.message
-        })
+      }
+      renderTodos()
+
+      let theme = 'light'
+      const themePreview = document.getElementById('themePreview')
+      const themeName = document.getElementById('themeName')
+      document.getElementById('themeBtn').addEventListener('click', () => {
+        theme = theme === 'light' ? 'dark' : 'light'
+        themePreview.className = `context-preview ${theme}`
+        themeName.textContent = theme
+      })
     </script>
   </body>
 </html>
