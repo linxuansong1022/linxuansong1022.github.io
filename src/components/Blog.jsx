@@ -6,7 +6,7 @@ const posts = [
         title: 'React + TypeScript Reading Notes',
         date: '2026-06-30',
         description: 'A beginner-friendly guide for reading React + TypeScript code: state, props, effects, forms, lists, context, hooks, and JSX syntax.',
-        href: '/blog/react-typescript-notes.md',
+        href: '/blog/react-typescript-notes.html',
         tags: ['React', 'TypeScript', 'Frontend Notes']
     }
 ]
